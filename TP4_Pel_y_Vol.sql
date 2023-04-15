@@ -104,6 +104,18 @@ ORDER BY extract(MONTH FROM fecha_nacimiento);
 
 -- ¿Cuáles son las 2 instituciones que más voluntarios tienen? (V)
 
+SELECT id_institucion, count(nro_voluntario)
+FROM unc_esq_voluntario.voluntario
+WHERE id_institucion IS NOT NULL
+GROUP BY id_institucion
+ORDER BY count(nro_voluntario) desc
+LIMIT 2;
 
 
 -- ¿Cuáles son los id de ciudades que tienen más de un departamento? (P)
+
+SELECT id_ciudad, count(id_departamento) AS Cant_Deptos
+FROM unc_esq_peliculas.departamento
+GROUP BY id_ciudad  HAVING count(id_departamento)>1;
+
+
