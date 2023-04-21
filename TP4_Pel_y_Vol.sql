@@ -70,20 +70,20 @@ ORDER BY extract(MONTH FROM fecha_nacimiento), extract(DAY FROM fecha_nacimiento
 nacidos desde 1990. (V) */
 
 SELECT MIN(horas_aportadas) AS Minimo, MAX(horas_aportadas) AS Maximo,
-       AVG(horas_aportadas) AS Promedio, count(horas_aportadas)
+       AVG(horas_aportadas) AS Promedio, count(*) voluntarios
 FROM unc_esq_voluntario.voluntario
 WHERE fecha_nacimiento >= '1990-01-01';
 
 -- Listar la cantidad de películas que hay por cada idioma. (P)
 
-SELECT idioma idioma, count(idioma) cant_peliculas
+SELECT idioma idioma, count(*) cant_peliculas
 FROM unc_esq_peliculas.pelicula
-GROUP BY idioma HAVING count(idioma)>0;
+GROUP BY idioma HAVING count(*)>0;
 -- innecesario poner el HAVING pero esta bueno por si necesitamos contar por ej idiomas con mas o menos peliculas.
 
 -- Calcular la cantidad de empleados por departamento. (P)
 
-SELECT id_departamento id_departamento, count(id_empleado)
+SELECT id_departamento departamento, count(*) empleados
 FROM unc_esq_peliculas.empleado
 GROUP BY id_departamento
 ORDER BY id_departamento; -- esto esta de mas, pero esta bueno verlos ordenados.
@@ -97,24 +97,24 @@ WHERE nro_entrega BETWEEN 3 and 5;
 
 -- ¿Cuántos cumpleaños de voluntarios hay cada mes? (V)
 
-SELECT extract(MONTH FROM fecha_nacimiento) mes, count(fecha_nacimiento) AS Cantidad_Cumpleaños
+SELECT extract(MONTH FROM fecha_nacimiento) mes, count(*) AS Cantidad_Cumpleaños
 FROM unc_esq_voluntario.voluntario
 GROUP BY extract(MONTH FROM fecha_nacimiento)
 ORDER BY extract(MONTH FROM fecha_nacimiento);
 
 -- ¿Cuáles son las 2 instituciones que más voluntarios tienen? (V)
 
-SELECT id_institucion id_institucion, count(nro_voluntario)
+SELECT id_institucion id_institucion, count(*) voluntarios
 FROM unc_esq_voluntario.voluntario
 GROUP BY id_institucion
-ORDER BY count(nro_voluntario) desc
+ORDER BY voluntarios desc
 LIMIT 2;
 
 
 -- ¿Cuáles son los id de ciudades que tienen más de un departamento? (P)
 
-SELECT id_ciudad id_ciudad, count(id_departamento) AS Cant_Deptos
+SELECT id_ciudad id_ciudad, count(*) AS cant_deptos
 FROM unc_esq_peliculas.departamento
-GROUP BY id_ciudad  HAVING count(id_departamento)>1;
+GROUP BY id_ciudad  HAVING count(*)>1;
 
 
